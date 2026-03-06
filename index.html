@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hospital MOCM/OTSS+ Checklist</title>
+    <meta name="description" content="Integrated Hospital MOCM/OTSS+ Checklist - NMCP Sierra Leone">
+    <meta name="theme-color" content="#004080">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MOCM Checklist">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="main-content" id="mainContent">
+    <div class="page-container">
+
+        <!-- HEADER -->
+        <div class="page-header">
+            <div class="header-logos">
+                <img src="https://github.com/mohamedsillahkanu/gdp-dashboard-2/raw/6c7463b0d5c3be150aafae695a4bcbbd8aeb1499/ICF-SL.jpg"
+                     alt="ICF-SL Logo" class="header-logo-main">
+            </div>
+            <h3>Informatics Consultancy Firm-Sierra Leone (ICF-SL)</h3>
+            <p class="tagline"><em>Driving Data-Driven Solutions for Health and Development</em></p>
+            <div class="header-divider"></div>
+            <h1>HOSPITAL MOCM / OTSS+ CHECKLIST</h1>
+            <p class="subtitle">Malaria Outreach Case Management / On-the-Spot Supervision &amp; Support — Sierra Leone</p>
+        </div>
+
+        <!-- PARTNER LOGOS -->
+        <div class="partners-section">
+            <div class="partners-label">IMPLEMENTING PARTNERS</div>
+            <div class="partners-grid">
+                <div class="partner-logo-card">
+                    <div class="partner-logo-img"><div class="logo-placeholder-box">MoHS</div></div>
+                    <span class="partner-name">Ministry of Health</span>
+                </div>
+                <div class="partner-logo-card">
+                    <div class="partner-logo-img"><div class="logo-placeholder-box">NMCP</div></div>
+                    <span class="partner-name">NMCP</span>
+                </div>
+                <div class="partner-logo-card">
+                    <div class="partner-logo-img"><div class="logo-placeholder-box">PMI</div></div>
+                    <span class="partner-name">PMI Evolve</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="controls-bar">
+            <button class="control-btn" id="viewDataBtn" onclick="viewData()">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+                VIEW DATA
+            </button>
+            <button class="control-btn" id="downloadDataBtn" onclick="downloadData()">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                DOWNLOAD
+            </button>
+            <button class="control-btn draft-btn" id="viewDraftsBtn" onclick="openDraftsModal()">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                DRAFTS
+            </button>
+            <button class="control-btn update-btn" onclick="newForm()">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+                NEW FORM
+            </button>
+        </div>
+
+        <!-- STATUS BAR -->
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <span class="status-text" id="statusText">READY</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">DRAFTS:</span>
+                <span class="draft-count" id="draftCount">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">SUBMITTED:</span>
+                <span class="pending-count" id="submittedCount">0</span>
+            </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="form-card">
+            <div class="form-content">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="progress-text" id="progressText">SECTION 1 OF 10</div>
+
+                <form id="dataForm" novalidate>
+                    <input type="hidden" name="form_status" id="form_status" value="draft">
+                    <input type="hidden" name="draft_id" id="draft_id" value="">
+                    <input type="hidden" name="timestamp" id="timestamp" value="">
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 1: INTRODUCTION -->
+                    <!-- ============================================================ -->
+                    <div class="form-section active" data-section="1">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                            </div>
+                            <div>
+                                <h2 class="section-title">SECTION 1: INTRODUCTION</h2>
+                                <p class="section-description">About the Integrated Hospital MOCM/OTSS+ Checklist</p>
+                            </div>
+                        </div>
+                        <div class="intro-card">
+                            <h3 class="intro-heading">ABOUT THIS CHECKLIST</h3>
+                            <p class="intro-paragraph">The <strong>Integrated Hospital MOCM/OTSS+ Checklist</strong> is a supervisory tool developed by the <strong>National Malaria Control Programme (NMCP)</strong> under the <strong>Ministry of Health and Sanitation (MoHS)</strong> of Sierra Leone. It supports structured on-the-spot supervision of hospital malaria case management readiness.</p>
+                            <p class="intro-paragraph">This digital tool captures supervisory visit data across 8 hospital malaria readiness domains including facility capacity, staff competency, supply chain, reporting tools, laboratory diagnostic quality, and emergency blood and oxygen readiness.</p>
+                            <div class="intro-features">
+                                <div class="intro-feature">
+                                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+                                    <div><div class="feature-title">FORM A: FACILITY PROFILE</div><div class="feature-desc">General health facility identification and supervisor information</div></div>
+                                </div>
+                                <div class="intro-feature">
+                                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+                                    <div><div class="feature-title">FORM B: READINESS CHECKLIST</div><div class="feature-desc">10 domains of hospital malaria management readiness assessment</div></div>
+                                </div>
+                                <div class="intro-feature">
+                                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                                    <div><div class="feature-title">CORRECTIVE ACTIONS</div><div class="feature-desc">Identify gaps and assign immediate corrective actions</div></div>
+                                </div>
+                                <div class="intro-feature">
+                                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+                                    <div><div class="feature-title">FOLLOW-UP TRACKING</div><div class="feature-desc">Track previous visit gaps and monitor action plan implementation</div></div>
+                                </div>
+                            </div>
+                            <div class="intro-instructions">
+                                <svg class="instructions-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                <div><strong>Instructions:</strong> Complete all sections during or immediately after the supervisory visit. Fields marked with <span class="required">*</span> are mandatory. Save drafts at any time and submit when complete.</div>
+                            </div>
+                        </div>
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-next full-width" onclick="nextSection()">START CHECKLIST <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 2: FORM A — GENERAL FACILITY INFORMATION -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="2">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                            <div><h2 class="section-title">FORM A: GENERAL FACILITY INFORMATION</h2><p class="section-description">Health facility identification, staff profile, and supervisor details</p></div>
+                        </div>
+
+                        <div class="form-group"><label class="form-label">REGION <span class="required">*</span></label><input type="text" class="form-input" name="region" id="region" required placeholder="Enter region name"><div class="field-error" id="error_region">This field is required</div></div>
+                        <div class="form-group"><label class="form-label">DISTRICT <span class="required">*</span></label><input type="text" class="form-input" name="district" id="district" required placeholder="Enter district name"><div class="field-error" id="error_district">This field is required</div></div>
+                        <div class="form-group"><label class="form-label">CHIEFDOM / ZONE / CITY <span class="required">*</span></label><input type="text" class="form-input" name="chiefdom" id="chiefdom" required placeholder="Enter chiefdom, zone, or city"><div class="field-error" id="error_chiefdom">This field is required</div></div>
+                        <div class="form-group"><label class="form-label">NAME OF HOSPITAL <span class="required">*</span></label><input type="text" class="form-input" name="hospital_name" id="hospital_name" required placeholder="Enter hospital name"><div class="field-error" id="error_hospital_name">This field is required</div></div>
+
+                        <div class="form-group">
+                            <label class="form-label">HOSPITAL TYPE <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="hospital_type" value="Regional"><span class="radio-text">Regional</span></label>
+                                <label class="radio-label"><input type="radio" name="hospital_type" value="District"><span class="radio-text">District</span></label>
+                                <label class="radio-label"><input type="radio" name="hospital_type" value="Teaching"><span class="radio-text">Teaching</span></label>
+                                <label class="radio-label"><input type="radio" name="hospital_type" value="Private"><span class="radio-text">Private</span></label>
+                                <label class="radio-label"><input type="radio" name="hospital_type" value="Faith Based"><span class="radio-text">Faith Based</span></label>
+                            </div>
+                            <div class="field-error" id="error_hospital_type">Please select hospital type</div>
+                        </div>
+
+                        <div class="form-group"><label class="form-label">TOTAL NUMBER OF HEALTH CARE WORKERS <span class="required">*</span></label><input type="number" class="form-input" name="total_hcw" id="total_hcw" min="0" placeholder="0" required><div class="field-error" id="error_total_hcw">This field is required</div></div>
+                        <div class="two-col">
+                            <div class="form-group"><label class="form-label">NUMBER OF FEMALE HCW <span class="required">*</span></label><input type="number" class="form-input" name="female_hcw" id="female_hcw" min="0" placeholder="0" required oninput="validateHCW()"></div>
+                            <div class="form-group"><label class="form-label">NUMBER OF MALE HCW <span class="required">*</span></label><input type="number" class="form-input" name="male_hcw" id="male_hcw" min="0" placeholder="0" required oninput="validateHCW()"></div>
+                        </div>
+                        <div class="field-error" id="error_hcw_split" style="display:none; margin-top:-8px; margin-bottom:12px;">Male + Female must equal total HCW</div>
+
+                        <div class="form-group"><label class="form-label">NAME OF FACILITY IN-CHARGE <span class="required">*</span></label><input type="text" class="form-input" name="facility_incharge" id="facility_incharge" required placeholder="Full name"><div class="field-error" id="error_facility_incharge">This field is required</div></div>
+                        <div class="form-group"><label class="form-label">CADRE OF FACILITY IN-CHARGE</label><input type="text" class="form-input" name="incharge_cadre" id="incharge_cadre" placeholder="e.g. Medical Officer, CHO"></div>
+                        <div class="form-group"><label class="form-label">DATE OF VISIT <span class="required">*</span></label><input type="date" class="form-input" name="visit_date" id="visit_date" required><div class="field-error" id="error_visit_date">This field is required</div></div>
+
+                        <!-- SUPERVISORS TABLE -->
+                        <div class="table-block">
+                            <div class="table-block-header">
+                                <svg class="block-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                                SUPERVISORS INFORMATION
+                            </div>
+                            <div class="supervisor-rows" id="supervisorRows">
+                                <div class="supervisor-row" data-row="1">
+                                    <div class="form-group"><label class="form-label">Supervisor 1 — Full Name</label><input type="text" class="form-input" name="sup1_name" id="sup1_name" placeholder="Full name"></div>
+                                    <div class="three-col">
+                                        <div class="form-group"><label class="form-label">Sex</label>
+                                            <select class="form-select" name="sup1_sex" id="sup1_sex"><option value="">Select</option><option>Male</option><option>Female</option></select>
+                                        </div>
+                                        <div class="form-group"><label class="form-label">Designation</label><input type="text" class="form-input" name="sup1_designation" id="sup1_designation" placeholder="Title/Role"></div>
+                                        <div class="form-group"><label class="form-label">Organization</label><input type="text" class="form-input" name="sup1_org" id="sup1_org" placeholder="Organization"></div>
+                                    </div>
+                                    <div class="two-col">
+                                        <div class="form-group"><label class="form-label">Contact</label><input type="tel" class="form-input" name="sup1_contact" id="sup1_contact" placeholder="Phone number"></div>
+                                    </div>
+                                </div>
+                                <div class="supervisor-row" data-row="2">
+                                    <div class="form-group"><label class="form-label">Supervisor 2 — Full Name</label><input type="text" class="form-input" name="sup2_name" id="sup2_name" placeholder="Full name (optional)"></div>
+                                    <div class="three-col">
+                                        <div class="form-group"><label class="form-label">Sex</label>
+                                            <select class="form-select" name="sup2_sex" id="sup2_sex"><option value="">Select</option><option>Male</option><option>Female</option></select>
+                                        </div>
+                                        <div class="form-group"><label class="form-label">Designation</label><input type="text" class="form-input" name="sup2_designation" id="sup2_designation" placeholder="Title/Role"></div>
+                                        <div class="form-group"><label class="form-label">Organization</label><input type="text" class="form-input" name="sup2_org" id="sup2_org" placeholder="Organization"></div>
+                                    </div>
+                                    <div class="two-col">
+                                        <div class="form-group"><label class="form-label">Contact</label><input type="tel" class="form-input" name="sup2_contact" id="sup2_contact" placeholder="Phone number"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STAFF DESCRIPTION TABLE -->
+                        <div class="table-block">
+                            <div class="table-block-header">
+                                <svg class="block-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                HEALTH FACILITY STAFF DESCRIPTION
+                            </div>
+                            <div class="staff-grid">
+                                <div class="staff-header-row">
+                                    <span>CADRE</span><span>MALE</span><span>FEMALE</span><span>ON SALARY</span><span>NOT ON SALARY</span>
+                                </div>
+                                <div class="staff-data-row">
+                                    <span class="staff-label">Medical (Doctors/CHOs)</span>
+                                    <input type="number" class="form-input mini" name="med_male" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="med_female" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="med_salary" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="med_nosalary" min="0" placeholder="0">
+                                </div>
+                                <div class="staff-data-row">
+                                    <span class="staff-label">Nursing (Midwives/SECHN)</span>
+                                    <input type="number" class="form-input mini" name="nurs_male" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="nurs_female" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="nurs_salary" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="nurs_nosalary" min="0" placeholder="0">
+                                </div>
+                                <div class="staff-data-row">
+                                    <span class="staff-label">Laboratory (Techs/CHTs)</span>
+                                    <input type="number" class="form-input mini" name="lab_male" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="lab_female" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="lab_salary" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="lab_nosalary" min="0" placeholder="0">
+                                </div>
+                                <div class="staff-data-row">
+                                    <span class="staff-label">Data / Records Clerk</span>
+                                    <input type="number" class="form-input mini" name="data_male" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="data_female" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="data_salary" min="0" placeholder="0">
+                                    <input type="number" class="form-input mini" name="data_nosalary" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 3: FORM B1 — FACILITY CAPACITY & STAFF TRAINING -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="3">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                            <div><h2 class="section-title">FORM B1: FACILITY CAPACITY &amp; STAFF TRAINING</h2><p class="section-description">Health facility infrastructure, staff competency, and basic tools</p></div>
+                        </div>
+
+                        <!-- 1. HEALTH FACILITY CAPACITY -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">1. HEALTH FACILITY CAPACITY</div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">1a</span>
+                                <span class="checklist-q">How many functional overnight beds are available?</span>
+                                <input type="number" class="form-input mini-inline" name="q1a_beds" min="0" placeholder="0">
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">1b</span>
+                                <span class="checklist-q">How many functional ambulances / transport &amp; referral phones?</span>
+                                <input type="number" class="form-input mini-inline" name="q1b_ambulance" min="0" placeholder="0">
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">1c</span>
+                                <span class="checklist-q">How many functional incinerators displayed?</span>
+                                <input type="number" class="form-input mini-inline" name="q1c_incinerator" min="0" placeholder="0">
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">1d</span>
+                                <span class="checklist-q">IPC guidelines displayed</span>
+                                <div class="yn-group" data-name="q1d_ipc"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">1e</span>
+                                <span class="checklist-q">Recent Malaria Guidelines &amp; IMNCI Charts available</span>
+                                <div class="yn-group" data-name="q1e_guidelines"></div>
+                            </div>
+                        </div>
+
+                        <!-- 2. STAFF COMPETENCY & TRAINING -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">2. MULTIDISCIPLINARY STAFF COMPETENCY &amp; TRAINING</div>
+                            <p class="checklist-note">Verify training records and conduct brief verbal/practical competency checks.</p>
+                            <div class="training-grid">
+                                <div class="training-header">
+                                    <span>STAFF CADRE</span><span>MALARIA CASE MGT</span><span>DATA / HMIS</span>
+                                </div>
+                                <div class="training-row">
+                                    <span class="training-label">2a. Medical (Doctors/CHOs)</span>
+                                    <div class="yn-group sm" data-name="q2a_malaria"></div>
+                                    <div class="yn-group sm" data-name="q2a_hmis"></div>
+                                </div>
+                                <div class="training-row">
+                                    <span class="training-label">2b. Nursing (Midwives/SECHN)</span>
+                                    <div class="yn-group sm" data-name="q2b_malaria"></div>
+                                    <div class="yn-group sm" data-name="q2b_hmis"></div>
+                                </div>
+                                <div class="training-row">
+                                    <span class="training-label">2c. Laboratory (Techs/CHTs)</span>
+                                    <div class="yn-group sm" data-name="q2c_malaria"></div>
+                                    <div class="yn-group sm" data-name="q2c_hmis"></div>
+                                </div>
+                                <div class="training-row">
+                                    <span class="training-label">2d. Data/Records Clerk</span>
+                                    <div class="yn-group sm" data-name="q2d_malaria"></div>
+                                    <div class="yn-group sm" data-name="q2d_hmis"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. BASIC TOOLS/INSTRUMENTS -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">3. AVAILABILITY OF BASIC TOOLS / INSTRUMENTS</div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3a</span>
+                                <span class="checklist-q">Is the inpatient/outpatient register correctly completed?</span>
+                                <div class="yn-group" data-name="q3a"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3b</span>
+                                <span class="checklist-q">Is there a malaria morbidity chart updated and displayed on the wall in all wards?</span>
+                                <div class="yn-group" data-name="q3b"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3c</span>
+                                <span class="checklist-q">Are there thermometers in working order in all wards?</span>
+                                <div class="yn-group" data-name="q3c"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3d</span>
+                                <span class="checklist-q">Is there a working scale (both hanging and standing scales)?</span>
+                                <div class="yn-group" data-name="q3d"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3e</span>
+                                <span class="checklist-q">Is there a working clinical examination kit (ENT)?</span>
+                                <div class="yn-group-3" data-name="q3e" data-options="Yes,No,Not Applicable"></div>
+                            </div>
+                            <div class="checklist-row multi">
+                                <span class="checklist-sn">3f</span>
+                                <span class="checklist-q">Types of instruments available (skip if 3e is No/N/A)</span>
+                                <div class="checkbox-group compact">
+                                    <label class="checkbox-label"><input type="checkbox" name="q3f_tongue" value="Tongue Depressor"><span class="checkbox-text">Tongue Depressor</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3f_otoscope" value="Otoscope"><span class="checkbox-text">Otoscope</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3f_mirror" value="Laryngeal Mirror"><span class="checkbox-text">Laryngeal Mirror</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3f_nasal" value="Nasal Speculum"><span class="checkbox-text">Nasal Speculum</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3f_suction" value="Nasal Suction Tips"><span class="checkbox-text">Nasal Suction Tips</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3f_light" value="Light Source"><span class="checkbox-text">Light Source</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3f_probe" value="Jobson Horne Probe"><span class="checkbox-text">Jobson Horne Probe</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3f_forceps" value="Dressing Forceps"><span class="checkbox-text">Dressing Forceps</span></label>
+                                </div>
+                            </div>
+                            <div class="checklist-row multi">
+                                <span class="checklist-sn">3g</span>
+                                <span class="checklist-q">Laboratory instruments and reagents available</span>
+                                <div class="checkbox-group compact">
+                                    <label class="checkbox-label"><input type="checkbox" name="q3g_microscope" value="Functional Microscope"><span class="checkbox-text">Functional Microscope</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3g_giemsa" value="Giemsa"><span class="checkbox-text">Giemsa</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3g_slides" value="Slides"><span class="checkbox-text">Slides</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3g_spares" value="Spare parts for microscope"><span class="checkbox-text">Spare parts for microscope</span></label>
+                                </div>
+                            </div>
+                            <div class="checklist-row multi">
+                                <span class="checklist-sn">3h</span>
+                                <span class="checklist-q">Other equipment available at the facility</span>
+                                <div class="checkbox-group compact">
+                                    <label class="checkbox-label"><input type="checkbox" name="q3h_bp" value="BP Monitor"><span class="checkbox-text">BP Monitor</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3h_gluco" value="Glucometer and Strips"><span class="checkbox-text">Glucometer and Strips</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3h_ambu" value="Ambu Bag"><span class="checkbox-text">Ambu Bag</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3h_mask" value="Face Mask"><span class="checkbox-text">Face Mask</span></label>
+                                </div>
+                            </div>
+                            <div class="checklist-row multi">
+                                <span class="checklist-sn">3i</span>
+                                <span class="checklist-q">Emergency equipment available</span>
+                                <div class="checkbox-group compact">
+                                    <label class="checkbox-label"><input type="checkbox" name="q3i_oxygen" value="Oxygen Tank"><span class="checkbox-text">Oxygen Tank</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3i_lumber" value="Lumber Puncture Kit"><span class="checkbox-text">Lumber Puncture Kit</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3i_na" value="Not Applicable"><span class="checkbox-text">Not Applicable</span></label>
+                                </div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3j</span>
+                                <span class="checklist-q">Is there an IV holder in all wards?</span>
+                                <div class="yn-group" data-name="q3j"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3k</span>
+                                <span class="checklist-q">Are there updated malaria guidelines in all consultation rooms and wards?</span>
+                                <div class="yn-group" data-name="q3k"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3l</span>
+                                <span class="checklist-q">Are there malaria job aids for diagnosis and management?</span>
+                                <div class="yn-group" data-name="q3l"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">3m</span>
+                                <span class="checklist-q">Are coma assessment sheets (Glasgow Coma Scale) available in the department?</span>
+                                <div class="yn-group" data-name="q3m"></div>
+                            </div>
+                        </div>
+
+                        <!-- 4. WASTE MANAGEMENT -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">4. WASTE MANAGEMENT</div>
+                            <div class="checklist-row multi">
+                                <span class="checklist-sn">4a</span>
+                                <span class="checklist-q">How does this facility finally dispose of medical waste? (Observed)</span>
+                                <div class="radio-group vertical">
+                                    <label class="radio-label"><input type="radio" name="q4a_waste" value="Burning (incinerator or protected environment)"><span class="radio-text">Burning (incinerator or protected environment)</span></label>
+                                    <label class="radio-label"><input type="radio" name="q4a_waste" value="Dump without burning (protected environment)"><span class="radio-text">Dump without burning (protected environment)</span></label>
+                                    <label class="radio-label"><input type="radio" name="q4a_waste" value="Disposal in unprotected environment"><span class="radio-text">Disposal in unprotected environment</span></label>
+                                    <label class="radio-label"><input type="radio" name="q4a_waste" value="Other"><span class="radio-text">Other</span></label>
+                                </div>
+                            </div>
+                            <div class="form-group sub-field" id="q4a_other_group" style="display:none;"><label class="form-label">Specify other waste disposal method</label><input type="text" class="form-input" name="q4a_other" id="q4a_other" placeholder="Describe method"></div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">4b</span>
+                                <span class="checklist-q">Does this facility have guidelines on standard precautions for infection prevention and control? (Observed)</span>
+                                <div class="yn-group" data-name="q4b"></div>
+                            </div>
+                        </div>
+
+                        <!-- 5. MALARIA REFERENCE MATERIAL -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">5. MALARIA REFERENCE MATERIAL</div>
+                            <p class="checklist-note">Only tick "Yes" if you can verify that the following materials are physically available.</p>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">5a</span>
+                                <span class="checklist-q">Most recent versions of malaria treatment guidelines for case management present in the health facility</span>
+                                <div class="yn-group" data-name="q5a"></div>
+                            </div>
+                            <div class="checklist-row">
+                                <span class="checklist-sn">5b</span>
+                                <span class="checklist-q">Most recent versions of algorithms for case management present in the OPD</span>
+                                <div class="yn-group" data-name="q5b"></div>
+                            </div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 4: FORM B2 — REPORTING TOOLS -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="4">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                            <div><h2 class="section-title">FORM B2: REPORTING TOOLS READINESS</h2><p class="section-description">Availability, sufficiency, and stock-out status of reporting tools</p></div>
+                        </div>
+
+                        <div class="reporting-tools-grid">
+                            <div class="rt-header-row">
+                                <span class="rt-label">REPORTING TOOL</span>
+                                <span class="rt-col">6. AVAILABLE</span>
+                                <span class="rt-col">7. SUFFICIENT (3 MONTHS)</span>
+                                <span class="rt-col">8. STOCK-OUT (PAST 3 MONTHS)</span>
+                            </div>
+                            <!-- Row for each tool -->
+                            <div class="rt-row">
+                                <span class="rt-label">IMNCI 0-59 Months Register</span>
+                                <div class="yn-group sm" data-name="q6a"></div>
+                                <div class="yn-group sm" data-name="q7a"></div>
+                                <div class="yn-group sm" data-name="q8a"></div>
+                            </div>
+                            <div class="rt-row">
+                                <span class="rt-label">Under-2 Register (EPI Register)</span>
+                                <div class="yn-group sm" data-name="q6b"></div>
+                                <div class="yn-group sm" data-name="q7b"></div>
+                                <div class="yn-group sm" data-name="q8b"></div>
+                            </div>
+                            <div class="rt-row">
+                                <span class="rt-label">Drug Dispensing Register</span>
+                                <div class="yn-group sm" data-name="q6c"></div>
+                                <div class="yn-group sm" data-name="q7c"></div>
+                                <div class="yn-group sm" data-name="q8c"></div>
+                            </div>
+                            <div class="rt-row">
+                                <span class="rt-label">Above-5 or General Register</span>
+                                <div class="yn-group sm" data-name="q6d"></div>
+                                <div class="yn-group sm" data-name="q7d"></div>
+                                <div class="yn-group sm" data-name="q8d"></div>
+                            </div>
+                            <div class="rt-row">
+                                <span class="rt-label">RRIV / MFRCH</span>
+                                <div class="yn-group sm" data-name="q6e"></div>
+                                <div class="yn-group sm" data-name="q7e"></div>
+                                <div class="yn-group sm" data-name="q8e"></div>
+                            </div>
+                            <div class="rt-row">
+                                <span class="rt-label">Stock Card / ICC</span>
+                                <div class="yn-group sm" data-name="q6f"></div>
+                                <div class="yn-group sm" data-name="q7f"></div>
+                                <div class="yn-group sm" data-name="q8f"></div>
+                            </div>
+                            <div class="rt-row">
+                                <span class="rt-label">Standard Inpatient Admission Register</span>
+                                <div class="yn-group sm" data-name="q6g"></div>
+                                <div class="yn-group sm" data-name="q7g"></div>
+                                <div class="yn-group sm" data-name="q8g"></div>
+                            </div>
+                            <div class="rt-row">
+                                <span class="rt-label">Standard Delivery Register</span>
+                                <div class="yn-group sm" data-name="q6h"></div>
+                                <div class="yn-group sm" data-name="q7h"></div>
+                                <div class="yn-group sm" data-name="q8h"></div>
+                            </div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 5: FORM B3 — SUPPLY CHAIN (ANTIMALARIALS) -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="5">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+                            <div><h2 class="section-title">FORM B3: SUPPLY CHAIN — ANTIMALARIAL DRUGS</h2><p class="section-description">Availability, sufficiency, and stock-out status of antimalarial drugs</p></div>
+                        </div>
+
+                        <div class="reporting-tools-grid">
+                            <div class="rt-header-row">
+                                <span class="rt-label">ANTIMALARIAL DRUG</span>
+                                <span class="rt-col">9.1 AVAILABLE</span>
+                                <span class="rt-col">9.2 SUFFICIENT (3 MONTHS)</span>
+                                <span class="rt-col">9.3 STOCK-OUT (PAST 3 MONTHS)</span>
+                            </div>
+                            <div class="rt-row"><span class="rt-label">ACT Infant (6)</span><div class="yn-group sm" data-name="q91a"></div><div class="yn-group sm" data-name="q92a"></div><div class="yn-group sm" data-name="q93a"></div></div>
+                            <div class="rt-row"><span class="rt-label">ACT Toddler (12)</span><div class="yn-group sm" data-name="q91b"></div><div class="yn-group sm" data-name="q92b"></div><div class="yn-group sm" data-name="q93b"></div></div>
+                            <div class="rt-row"><span class="rt-label">ACT Adolescent (18)</span><div class="yn-group sm" data-name="q91c"></div><div class="yn-group sm" data-name="q92c"></div><div class="yn-group sm" data-name="q93c"></div></div>
+                            <div class="rt-row"><span class="rt-label">ACT Adult (24)</span><div class="yn-group sm" data-name="q91d"></div><div class="yn-group sm" data-name="q92d"></div><div class="yn-group sm" data-name="q93d"></div></div>
+                            <div class="rt-row"><span class="rt-label">RDTs</span><div class="yn-group sm" data-name="q91e"></div><div class="yn-group sm" data-name="q92e"></div><div class="yn-group sm" data-name="q93e"></div></div>
+                            <div class="rt-row"><span class="rt-label">SP (IPTp)</span><div class="yn-group sm" data-name="q91f"></div><div class="yn-group sm" data-name="q92f"></div><div class="yn-group sm" data-name="q93f"></div></div>
+                            <div class="rt-row"><span class="rt-label">SP (IPTi)</span><div class="yn-group sm" data-name="q91g"></div><div class="yn-group sm" data-name="q92g"></div><div class="yn-group sm" data-name="q93g"></div></div>
+                            <div class="rt-row"><span class="rt-label">LLINs</span><div class="yn-group sm" data-name="q91h"></div><div class="yn-group sm" data-name="q92h"></div><div class="yn-group sm" data-name="q93h"></div></div>
+                            <div class="rt-row"><span class="rt-label">Artesunate Injection</span><div class="yn-group sm" data-name="q91i"></div><div class="yn-group sm" data-name="q92i"></div><div class="yn-group sm" data-name="q93i"></div></div>
+                            <div class="rt-row"><span class="rt-label">Artesunate Suppositories</span><div class="yn-group sm" data-name="q91j"></div><div class="yn-group sm" data-name="q92j"></div><div class="yn-group sm" data-name="q93j"></div></div>
+                            <div class="rt-row"><span class="rt-label">Malaria Vaccine (RTS,S)</span><div class="yn-group sm" data-name="q91k"></div><div class="yn-group sm" data-name="q92k"></div><div class="yn-group sm" data-name="q93k"></div></div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 6: FORM B4 — ESSENTIAL DRUGS -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="6">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+                            <div><h2 class="section-title">FORM B4: ESSENTIAL DRUGS</h2><p class="section-description">Availability, sufficiency, stock-out of essential drugs and storage conditions</p></div>
+                        </div>
+
+                        <div class="reporting-tools-grid">
+                            <div class="rt-header-row">
+                                <span class="rt-label">ESSENTIAL DRUG</span>
+                                <span class="rt-col">10.1 AVAILABLE</span>
+                                <span class="rt-col">10.2 SUFFICIENT (2 MONTHS)</span>
+                                <span class="rt-col">10.3 STOCK-OUT (PAST 3 MONTHS)</span>
+                            </div>
+                            <div class="rt-row"><span class="rt-label">Paracetamol</span><div class="yn-group sm" data-name="q101a"></div><div class="yn-group sm" data-name="q102a"></div><div class="yn-group sm" data-name="q103a"></div></div>
+                            <div class="rt-row"><span class="rt-label">Clotrimazoles</span><div class="yn-group sm" data-name="q101b"></div><div class="yn-group sm" data-name="q102b"></div><div class="yn-group sm" data-name="q103b"></div></div>
+                            <div class="rt-row"><span class="rt-label">Amoxicillin</span><div class="yn-group sm" data-name="q101c"></div><div class="yn-group sm" data-name="q102c"></div><div class="yn-group sm" data-name="q103c"></div></div>
+                            <div class="rt-row"><span class="rt-label">Fefol / Folic Acid</span><div class="yn-group sm" data-name="q101d"></div><div class="yn-group sm" data-name="q102d"></div><div class="yn-group sm" data-name="q103d"></div></div>
+                            <div class="rt-row"><span class="rt-label">ORS</span><div class="yn-group sm" data-name="q101e"></div><div class="yn-group sm" data-name="q102e"></div><div class="yn-group sm" data-name="q103e"></div></div>
+                            <div class="rt-row"><span class="rt-label">5% Glucose Solution</span><div class="yn-group sm" data-name="q101f"></div><div class="yn-group sm" data-name="q102f"></div><div class="yn-group sm" data-name="q103f"></div></div>
+                            <div class="rt-row"><span class="rt-label">10% Glucose Solution</span><div class="yn-group sm" data-name="q101g"></div><div class="yn-group sm" data-name="q102g"></div><div class="yn-group sm" data-name="q103g"></div></div>
+                            <div class="rt-row"><span class="rt-label">50% Glucose Solution</span><div class="yn-group sm" data-name="q101h"></div><div class="yn-group sm" data-name="q102h"></div><div class="yn-group sm" data-name="q103h"></div></div>
+                            <div class="rt-row"><span class="rt-label">Injectable Diazepam</span><div class="yn-group sm" data-name="q101i"></div><div class="yn-group sm" data-name="q102i"></div><div class="yn-group sm" data-name="q103i"></div></div>
+                            <div class="rt-row"><span class="rt-label">IV Ringers Lactate</span><div class="yn-group sm" data-name="q101j"></div><div class="yn-group sm" data-name="q102j"></div><div class="yn-group sm" data-name="q103j"></div></div>
+                            <div class="rt-row"><span class="rt-label">IV Normal Saline</span><div class="yn-group sm" data-name="q101k"></div><div class="yn-group sm" data-name="q102k"></div><div class="yn-group sm" data-name="q103k"></div></div>
+                        </div>
+
+                        <!-- Storage / Inventory -->
+                        <div class="checklist-block" style="margin-top:20px;">
+                            <div class="checklist-block-header">INVENTORY MANAGEMENT &amp; STORAGE</div>
+                            <div class="checklist-row"><span class="checklist-sn">10.1l</span><span class="checklist-q">Does this facility use mSupply for inventory management?</span><div class="yn-group" data-name="q101l"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">10.1m</span><span class="checklist-q">Is mSupply up to date? (Skip if 10.1l is No)</span><div class="yn-group-3" data-name="q101m" data-options="Yes,No,Not Applicable"></div></div>
+                            <div class="checklist-row multi"><span class="checklist-sn">10.1n</span><span class="checklist-q">Is the storage condition optimal? Select all that apply</span>
+                                <div class="checkbox-group compact">
+                                    <label class="checkbox-label"><input type="checkbox" name="q101n_ventilation" value="Ventilation"><span class="checkbox-text">Ventilation</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q101n_security" value="Security"><span class="checkbox-text">Security</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q101n_dry" value="Dry"><span class="checkbox-text">Dry</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q101n_size" value="Size"><span class="checkbox-text">Adequate Size</span></label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q101n_none" value="None"><span class="checkbox-text">None</span></label>
+                                </div>
+                            </div>
+                            <div class="checklist-row"><span class="checklist-sn">10.1o</span><span class="checklist-q">Can emergency requests be honored within 1 hour?</span><div class="yn-group" data-name="q101o"></div></div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 7: FORM B5 — mRDT COMPLIANCE & LAB QUALITY -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="7">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div>
+                            <div><h2 class="section-title">FORM B5: mRDT COMPLIANCE &amp; LABORATORY DIAGNOSTIC QUALITY</h2><p class="section-description">Compliance with mRDT negative results and laboratory quality assessment</p></div>
+                        </div>
+
+                        <!-- 11. mRDT COMPLIANCE -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">11. COMPLIANCE WITH mRDT NEGATIVE RESULTS</div>
+                            <p class="checklist-note">Select and review the most recent 3 under-five records and 2 above-five records with negative mRDT results.</p>
+                            <div class="mrdt-grid">
+                                <div class="mrdt-header"><span>INDICATOR</span><span>TOTAL (5)</span><span>GAP</span><span>5/5 = 100%</span></div>
+                                <div class="mrdt-row"><span>11a. ID in register</span><input type="number" class="form-input mini" name="q11a_total" min="0" max="5" placeholder="0"><input type="number" class="form-input mini" name="q11a_gap" min="0" placeholder="0"><input type="number" class="form-input mini" name="q11a_pct" min="0" max="100" placeholder="0"></div>
+                                <div class="mrdt-row"><span>11b. Name</span><input type="number" class="form-input mini" name="q11b_total" min="0" max="5" placeholder="0"><input type="number" class="form-input mini" name="q11b_gap" min="0" placeholder="0"><input type="number" class="form-input mini" name="q11b_pct" min="0" max="100" placeholder="0"></div>
+                                <div class="mrdt-row"><span>11c. Age</span><input type="number" class="form-input mini" name="q11c_total" min="0" max="5" placeholder="0"><input type="number" class="form-input mini" name="q11c_gap" min="0" placeholder="0"><input type="number" class="form-input mini" name="q11c_pct" min="0" max="100" placeholder="0"></div>
+                                <div class="mrdt-row"><span>11d. Gender</span><input type="number" class="form-input mini" name="q11d_total" min="0" max="5" placeholder="0"><input type="number" class="form-input mini" name="q11d_gap" min="0" placeholder="0"><input type="number" class="form-input mini" name="q11d_pct" min="0" max="100" placeholder="0"></div>
+                                <div class="mrdt-row"><span>11e. Clinical signs</span><input type="number" class="form-input mini" name="q11e_total" min="0" max="5" placeholder="0"><input type="number" class="form-input mini" name="q11e_gap" min="0" placeholder="0"><input type="number" class="form-input mini" name="q11e_pct" min="0" max="100" placeholder="0"></div>
+                                <div class="mrdt-row"><span>11f. Test result negative</span><input type="number" class="form-input mini" name="q11f_total" min="0" max="5" placeholder="0"><input type="number" class="form-input mini" name="q11f_gap" min="0" placeholder="0"><input type="number" class="form-input mini" name="q11f_pct" min="0" max="100" placeholder="0"></div>
+                            </div>
+                            <div class="checklist-row"><span class="checklist-sn">11g</span><span class="checklist-q">Is there any negative test that received treatment?</span><div class="yn-group" data-name="q11g"></div></div>
+                            <div class="checklist-row sub" id="q11h_row">
+                                <span class="checklist-sn">11h</span>
+                                <span class="checklist-q">How many negatives were treated?</span>
+                                <input type="number" class="form-input mini-inline" name="q11h_count" min="0" placeholder="0">
+                            </div>
+                        </div>
+
+                        <!-- 12. LABORATORY QUALITY -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">12. LABORATORY DIAGNOSTIC QUALITY &amp; ADJUVANT TESTING</div>
+                            <p class="checklist-note">Assessing the hospital capacity to identify severity and comorbidities.</p>
+                            <div class="checklist-row"><span class="checklist-sn">12a</span><span class="checklist-q">Parasitology: mRDT or Microscopy ordered before treatment?</span><div class="yn-group" data-name="q12a"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">12b</span><span class="checklist-q">Microscopy Quality: Parasite density (count) reported in the register?</span><div class="yn-group" data-name="q12b"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">12c</span><span class="checklist-q">Hb Testing: Hemoglobin tested (Threshold: Child less than 5g/dL, Adult less than 7g/dL)?</span><div class="yn-group" data-name="q12c"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">12d</span><span class="checklist-q">Glucose: Blood glucose checked for hypoglycemia?</span><div class="yn-group" data-name="q12d"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">12e</span><span class="checklist-q">Urinalysis: Checked for bilirubinuria (jaundice) or proteinuria (AKI)?</span><div class="yn-group" data-name="q12e"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">12f</span><span class="checklist-q">Lab Standards: Giemsa stain pH monitored and slides cross-checked (EQA)?</span><div class="yn-group" data-name="q12f"></div></div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 8: FORM B6 — BLOOD & OXYGEN READINESS -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="8">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg></div>
+                            <div><h2 class="section-title">FORM B6: EMERGENCY BLOOD &amp; OXYGEN READINESS</h2><p class="section-description">Blood transfusion services and oxygen therapy apparatus</p></div>
+                        </div>
+
+                        <!-- 13.1 BLOOD TRANSFUSION -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">13.1 BLOOD TRANSFUSION SERVICES</div>
+                            <p class="checklist-note">Target: Hemoglobin (Hb) below 5.0 g/dL in children or below 7.0 g/dL in adults/pregnant women.</p>
+                            <div class="checklist-row extended">
+                                <span class="checklist-sn">13.1a</span>
+                                <span class="checklist-q">Screened blood units: Safe blood (screened for HIV, Hep B/C, Syphilis) in stock?</span>
+                                <div class="yn-group sm" data-name="q131a"></div>
+                                <div class="notes-inline"><label class="mini-label">Units available:</label><input type="number" class="form-input mini-inline" name="q131a_units" min="0" placeholder="0"></div>
+                            </div>
+                            <div class="checklist-row extended">
+                                <span class="checklist-sn">13.1b</span>
+                                <span class="checklist-q">Blood grouping/cross-match reagents (Anti-A, B, D) and Coombs available?</span>
+                                <div class="yn-group sm" data-name="q131b"></div>
+                                <div class="notes-inline"><div class="yn-group-3 sm" data-name="q131b_stock" data-options="Low Stock,Adequate,N/A"></div></div>
+                            </div>
+                            <div class="checklist-row"><span class="checklist-sn">13.1c</span><span class="checklist-q">Emergency donor pool: List of walking donors or local donor registry updated?</span><div class="yn-group" data-name="q131c"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">13.1d</span><span class="checklist-q">Transfusion sets: Sterile, filtered blood giving sets in stock?</span><div class="yn-group" data-name="q131d"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">13.1e</span><span class="checklist-q">Hb monitoring: Functional HemoCue or photometer for serial Hb testing?</span><div class="yn-group" data-name="q131e"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">13.1f</span><span class="checklist-q">Cold chain: Dedicated blood bank refrigerator with temperature log (2°C to 6°C)?</span><div class="yn-group" data-name="q131f"></div></div>
+                        </div>
+
+                        <!-- 13.2 OXYGEN THERAPY -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">13.2 OXYGEN THERAPY &amp; APPARATUS</div>
+                            <p class="checklist-note">Target: Respiratory distress (acidotic breathing) or SpO2 below 90%.</p>
+                            <div class="checklist-row extended">
+                                <span class="checklist-sn">13.2a</span>
+                                <span class="checklist-q">Oxygen source: Functional oxygen concentrator or filled cylinders?</span>
+                                <div class="yn-group sm" data-name="q132a"></div>
+                                <div class="notes-inline"><label class="mini-label">Working units:</label><input type="number" class="form-input mini-inline" name="q132a_units" min="0" placeholder="0"></div>
+                            </div>
+                            <div class="checklist-row"><span class="checklist-sn">13.2b</span><span class="checklist-q">Pulse oximeters: Functional handheld or bedside SpO2 monitors?</span><div class="yn-group" data-name="q132b"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">13.2c</span><span class="checklist-q">Flow meters and humidifiers: Working flow meters and sterile water for humidification?</span><div class="yn-group" data-name="q132c"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">13.2d</span><span class="checklist-q">Delivery interfaces: Nasal prongs and face masks (pediatric and adult sizes)?</span><div class="yn-group" data-name="q132d"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">13.2e</span><span class="checklist-q">Suction machine: Manual or electric suction for airway clearance?</span><div class="yn-group" data-name="q132e"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">13.2f</span><span class="checklist-q">Ambu bag (BVM): Resuscitation bags with appropriately sized masks?</span><div class="yn-group" data-name="q132f"></div></div>
+                            <div class="checklist-row"><span class="checklist-sn">13.2g</span><span class="checklist-q">Power backup: Generator or UPS to ensure oxygen supply during outages?</span><div class="yn-group" data-name="q132g"></div></div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 9: FORM B7 — CORRECTIVE ACTIONS & SUPERVISOR FEEDBACK -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="9">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+                            <div><h2 class="section-title">FORM B7: CORRECTIVE ACTIONS &amp; SUPERVISOR FEEDBACK</h2><p class="section-description">Identified gaps, immediate corrective actions, and supervisor assessment</p></div>
+                        </div>
+
+                        <!-- 14. IMMEDIATE CORRECTIVE ACTIONS -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">14. IMMEDIATE CORRECTIVE ACTIONS (ICA)</div>
+                            <div class="ica-grid">
+                                <div class="ica-header"><span>SECTION</span><span>IDENTIFIED GAP</span><span>IDENTIFIED?</span><span>CORRECTIVE ACTION</span></div>
+                                <div class="ica-row"><span class="ica-section">Facility Capacity</span><span class="ica-gap">Broken incinerator / waste disposal issues</span><div class="yn-group sm" data-name="q14a1"></div><input type="text" class="form-input" name="q14a1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Facility Capacity</span><span class="ica-gap">No functional ambulance or referral phone</span><div class="yn-group sm" data-name="q14a2"></div><input type="text" class="form-input" name="q14a2_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Staff Training</span><span class="ica-gap">Staff not trained in malaria case management / HMIS</span><div class="yn-group sm" data-name="q14b1"></div><input type="text" class="form-input" name="q14b1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Basic Tools</span><span class="ica-gap">Missing thermometers, scales, or ENT kits</span><div class="yn-group sm" data-name="q14c1"></div><input type="text" class="form-input" name="q14c1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Basic Tools</span><span class="ica-gap">Missing GCS or malaria job aids</span><div class="yn-group sm" data-name="q14c2"></div><input type="text" class="form-input" name="q14c2_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Reporting</span><span class="ica-gap">Stock-out of official registers</span><div class="yn-group sm" data-name="q14d1"></div><input type="text" class="form-input" name="q14d1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Reporting</span><span class="ica-gap">Incomplete patient records</span><div class="yn-group sm" data-name="q14d2"></div><input type="text" class="form-input" name="q14d2_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Supply Chain</span><span class="ica-gap">Stock-out of ACTs, RDTs, or SP</span><div class="yn-group sm" data-name="q14e1"></div><input type="text" class="form-input" name="q14e1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Supply Chain</span><span class="ica-gap">mSupply not up to date</span><div class="yn-group sm" data-name="q14e2"></div><input type="text" class="form-input" name="q14e2_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Supply Chain</span><span class="ica-gap">Sub-optimal storage (wet/insecure)</span><div class="yn-group sm" data-name="q14e3"></div><input type="text" class="form-input" name="q14e3_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Compliance</span><span class="ica-gap">RDT negative cases receiving ACTs</span><div class="yn-group sm" data-name="q14f1"></div><input type="text" class="form-input" name="q14f1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Lab Quality</span><span class="ica-gap">Missing Hb or glucose testing</span><div class="yn-group sm" data-name="q14g1"></div><input type="text" class="form-input" name="q14g1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Lab Quality</span><span class="ica-gap">Faulty microscope</span><div class="yn-group sm" data-name="q14g2"></div><input type="text" class="form-input" name="q14g2_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Lab Quality</span><span class="ica-gap">No Giemsa pH monitoring</span><div class="yn-group sm" data-name="q14g3"></div><input type="text" class="form-input" name="q14g3_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Blood/Oxygen</span><span class="ica-gap">No screened blood in stock</span><div class="yn-group sm" data-name="q14h1"></div><input type="text" class="form-input" name="q14h1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Electricity</span><span class="ica-gap">Oxygen concentrator failure</span><div class="yn-group sm" data-name="q14i1"></div><input type="text" class="form-input" name="q14i1_ica" placeholder="Action taken"></div>
+                                <div class="ica-row"><span class="ica-section">Electricity</span><span class="ica-gap">Power failure</span><div class="yn-group sm" data-name="q14j1"></div><input type="text" class="form-input" name="q14j1_ica" placeholder="Action taken"></div>
+                            </div>
+                        </div>
+
+                        <!-- 15. SUPERVISOR FEEDBACK -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">15. HOSPITAL SUPERVISOR FEEDBACK</div>
+                            <div class="checklist-row"><span class="checklist-sn">15a</span>
+                                <span class="checklist-q">Did you provide formal feedback to the Hospital Management Team (HMT) and clinical leads on: Training/Clinical Competency, Supply Chain, Reporting Tools, Lab Diagnostic Quality, and Emergency (Blood/Oxygen) Readiness?</span>
+                                <div class="yn-group" data-name="q15a"></div>
+                            </div>
+                            <div class="checklist-row multi"><span class="checklist-sn">15b</span>
+                                <span class="checklist-q">Based on overall observations of the 8 Hospital Malaria Readiness Domains, how would you rate this facility's capacity to manage severe malaria?</span>
+                                <div class="radio-group vertical">
+                                    <label class="radio-label"><input type="radio" name="q15b_rating" value="Unsatisfactory"><span class="radio-text">Unsatisfactory</span></label>
+                                    <label class="radio-label"><input type="radio" name="q15b_rating" value="Fair"><span class="radio-text">Fair</span></label>
+                                    <label class="radio-label"><input type="radio" name="q15b_rating" value="Satisfactory"><span class="radio-text">Satisfactory</span></label>
+                                    <label class="radio-label"><input type="radio" name="q15b_rating" value="Excellent"><span class="radio-text">Excellent</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- SECTION 10: ACTION PLAN, COMMENTS & SUBMISSION -->
+                    <!-- ============================================================ -->
+                    <div class="form-section" data-section="10">
+                        <div class="section-header">
+                            <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                            <div><h2 class="section-title">SECTION 10: ACTION PLAN, FOLLOW-UP &amp; SUBMISSION</h2><p class="section-description">Gap action plan, previous visit review, and final submission</p></div>
+                        </div>
+
+                        <!-- 16. ACTION PLAN -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">16. ACTION PLAN FOR ADDRESSING IDENTIFIED GAPS</div>
+                            <div id="actionPlanRows">
+                                <div class="action-plan-row ap-header">
+                                    <span>IDENTIFIED GAP</span><span>RECOMMENDED ACTION</span><span>RESPONSIBLE PERSON</span><span>TIMELINE</span><span>STATUS</span>
+                                </div>
+                                <div class="action-plan-row" data-row="1">
+                                    <input type="text" class="form-input" name="ap1_gap" placeholder="Identified gap">
+                                    <input type="text" class="form-input" name="ap1_action" placeholder="Recommended action">
+                                    <input type="text" class="form-input" name="ap1_person" placeholder="Responsible person(s)">
+                                    <input type="date" class="form-input" name="ap1_timeline">
+                                    <input type="text" class="form-input" name="ap1_status" placeholder="Update/Status">
+                                </div>
+                                <div class="action-plan-row" data-row="2">
+                                    <input type="text" class="form-input" name="ap2_gap" placeholder="Identified gap">
+                                    <input type="text" class="form-input" name="ap2_action" placeholder="Recommended action">
+                                    <input type="text" class="form-input" name="ap2_person" placeholder="Responsible person(s)">
+                                    <input type="date" class="form-input" name="ap2_timeline">
+                                    <input type="text" class="form-input" name="ap2_status" placeholder="Update/Status">
+                                </div>
+                                <div class="action-plan-row" data-row="3">
+                                    <input type="text" class="form-input" name="ap3_gap" placeholder="Identified gap">
+                                    <input type="text" class="form-input" name="ap3_action" placeholder="Recommended action">
+                                    <input type="text" class="form-input" name="ap3_person" placeholder="Responsible person(s)">
+                                    <input type="date" class="form-input" name="ap3_timeline">
+                                    <input type="text" class="form-input" name="ap3_status" placeholder="Update/Status">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 17. ADDITIONAL COMMENTS -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">17. ADDITIONAL COMMENTS ON OBSERVATIONS</div>
+                            <div class="form-group"><textarea class="form-textarea" name="q17_comments" id="q17_comments" rows="4" placeholder="Enter any additional observations here..."></textarea></div>
+                        </div>
+
+                        <!-- 18-20. PREVIOUS VISIT FOLLOW-UP -->
+                        <div class="checklist-block">
+                            <div class="checklist-block-header">18-20. PREVIOUS VISIT FOLLOW-UP</div>
+                            <div class="form-group">
+                                <label class="form-label">18. BIGGEST GAPS IDENTIFIED DURING LAST HF VISIT</label>
+                                <div class="numbered-textarea"><span class="num-label">1.</span><input type="text" class="form-input" name="q18_gap1" placeholder="Describe first gap"></div>
+                                <div class="numbered-textarea"><span class="num-label">2.</span><input type="text" class="form-input" name="q18_gap2" placeholder="Describe second gap"></div>
+                                <div class="numbered-textarea"><span class="num-label">3.</span><input type="text" class="form-input" name="q18_gap3" placeholder="Describe third gap"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">19. ACTION PLAN FROM THE PREVIOUS VISIT</label>
+                                <div class="numbered-textarea"><span class="num-label">1.</span><input type="text" class="form-input" name="q19_plan1" placeholder="Describe action 1"></div>
+                                <div class="numbered-textarea"><span class="num-label">2.</span><input type="text" class="form-input" name="q19_plan2" placeholder="Describe action 2"></div>
+                                <div class="numbered-textarea"><span class="num-label">3.</span><input type="text" class="form-input" name="q19_plan3" placeholder="Describe action 3"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">20. WERE THESE GAPS ADDRESSED?</label>
+                                <div class="radio-group">
+                                    <label class="radio-label"><input type="radio" name="q20_addressed" value="Not Addressed"><span class="radio-text">Not Addressed</span></label>
+                                    <label class="radio-label"><input type="radio" name="q20_addressed" value="Partially Addressed"><span class="radio-text">Partially Addressed</span></label>
+                                    <label class="radio-label"><input type="radio" name="q20_addressed" value="Completely Addressed"><span class="radio-text">Completely Addressed</span></label>
+                                    <label class="radio-label"><input type="radio" name="q20_addressed" value="Initial Visit"><span class="radio-text">Initial Visit</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FINALIZE / SUBMIT -->
+                        <div class="submit-block">
+                            <div class="submit-note">
+                                <svg class="note-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                                Review all sections before submitting. Once submitted, the record is saved permanently.
+                            </div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn-nav btn-back" onclick="previousSection()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> BACK</button>
+                            <button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE</button>
+                            <button type="button" class="btn-nav btn-finalize" onclick="finalizeForm()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> FINALIZE</button>
+                            <button type="submit" class="btn-nav btn-submit" id="submitBtn" disabled><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> SUBMIT</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="page-footer">
+            <p class="footer-main">Integrated Hospital MOCM/OTSS+ Checklist — Sierra Leone</p>
+            <div class="footer-partners">Ministry of Health | NMCP | PMI Evolve</div>
+            <p class="footer-copy">&copy; 2025 Informatics Consultancy Firm-Sierra Leone (ICF-SL)</p>
+        </div>
+    </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="draftsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title"><svg class="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> SAVED DRAFTS</span>
+            <button class="modal-close" onclick="closeDraftsModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="modal-body" id="draftsModalBody"></div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="draftNameModal">
+    <div class="modal-content small">
+        <div class="modal-header yellow">
+            <span class="modal-title"><svg class="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg> SAVE DRAFT</span>
+        </div>
+        <div class="modal-body">
+            <label class="form-label">DRAFT NAME:</label>
+            <input type="text" class="form-input" id="draftNameInput" placeholder="Enter a name for this draft">
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="cancelDraftName()">CANCEL</button>
+                <button class="modal-btn save" onclick="confirmSaveDraft()">SAVE DRAFT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="dataModal">
+    <div class="modal-content large">
+        <div class="modal-header">
+            <span class="modal-title"><svg class="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg> SUBMITTED RECORDS</span>
+            <button class="modal-close" onclick="closeDataModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="modal-body" id="dataModalBody"></div>
+    </div>
+</div>
+
+<div class="notification" id="notification"><span id="notificationText"></span></div>
+
+<script src="script.js"></script>
+</body>
+</html>
