@@ -1,0 +1,72 @@
+Region,District,Chiefdom,Hospital_Name,Hospital_Type
+West Area,Western Area Urban,Freetown East,Connaught Hospital,Teaching
+West Area,Western Area Urban,Freetown East,Princess Christian Maternity Hospital,Teaching
+West Area,Western Area Urban,Freetown East,Ola During Children Hospital,Teaching
+West Area,Western Area Urban,Freetown West,34 Military Hospital,Teaching
+West Area,Western Area Urban,Freetown West,Lumley Government Hospital,District
+West Area,Western Area Urban,Freetown Central,Sierra Leone Psychiatric Teaching Hospital,Teaching
+West Area,Western Area Urban,Freetown Central,Murray Town Government Hospital,District
+West Area,Western Area Urban,Freetown Central,Rokupa Government Hospital,District
+West Area,Western Area Rural,Waterloo,Waterloo Community Hospital,District
+West Area,Western Area Rural,Kissy,Kissy Mess Mess Government Hospital,District
+West Area,Western Area Rural,Grafton,Grafton Mental Health Hospital,Faith Based
+West Area,Western Area Rural,Aberdeen,Aberdeen Women's Centre,Faith Based
+North West,Kambia,Bramaia,Kambia Government Hospital,District
+North West,Kambia,Gbinle Dixing,Gbinle Community Hospital,District
+North West,Kambia,Magbema,Magbema Government Hospital,District
+North West,Kambia,Masungbala,Masungbala CHC,District
+North West,Kambia,Tonko Limba,Tonko Limba Community Hospital,District
+North West,Port Loko,Kaffu Bullom,Port Loko Government Hospital,District
+North West,Port Loko,Buya Romende,Buya Romende CHC,District
+North West,Port Loko,Maforki,Maforki Government Hospital,District
+North West,Port Loko,Masimera,Masimera Community Hospital,District
+North West,Port Loko,Lokomasama,Lokomasama Government Hospital,District
+North West,Port Loko,Koya,Koya CHC,District
+North East,Bombali,Bombali Sebora,Magburaka Government Hospital,District
+North East,Bombali,Makari Gbanti,Makeni Regional Hospital,Regional
+North East,Bombali,Limai,Limai CHC,District
+North East,Bombali,Sanda Tendaren,Sanda Government Hospital,District
+North East,Tonkolili,Gbonkolenken,Gbonkolenken Government Hospital,District
+North East,Tonkolili,Yoni,Yoni CHC,District
+North East,Tonkolili,Kunike,Strokos Government Hospital,District
+North East,Tonkolili,Kholifa Rowala,Kholifa Rowala CHC,District
+North East,Koinadugu,Neya,Kabala Government Hospital,District
+North East,Koinadugu,Sengbe,Sengbe CHC,District
+North East,Koinadugu,Mongo,Mongo Community Hospital,Faith Based
+North East,Koinadugu,Sulima,Sulima Government Hospital,District
+North East,Falaba,Kasunko,Kasunko CHC,District
+North East,Falaba,Dembelia Sinkunia,Dembelia Government Hospital,District
+North East,Falaba,Neya,Falaba Government Hospital,District
+East,Kenema,Nongowa,Kenema Government Hospital,Regional
+East,Kenema,Lower Bambara,Tonga Government Hospital,District
+East,Kenema,Koya Chiefdom,Koya Government Hospital,District
+East,Kenema,Dama,Dama CHC,District
+East,Kenema,Gorama Mende,Gorama Mende CHC,District
+East,Kono,Nimikoro,Koidu Government Hospital,District
+East,Kono,Gbense,Gbense CHC,District
+East,Kono,Tankoro,Tankoro Government Hospital,District
+East,Kono,Nimiyama,Nimiyama CHC,District
+East,Kono,Soa,Soa Government Hospital,District
+East,Kailahun,Luawa,Kailahun Government Hospital,District
+East,Kailahun,Njaluahun,Njaluahun CHC,District
+East,Kailahun,Malema,Malema Government Hospital,District
+East,Kailahun,Jawie,Jawie Community Hospital,Faith Based
+East,Kailahun,Kissi Teng,Kissi Teng CHC,District
+South,Bo,Kakua,Bo Government Hospital,Regional
+South,Bo,Tikonko,Tikonko CHC,District
+South,Bo,Valunia,Valunia Government Hospital,District
+South,Bo,Gbo,Gbo CHC,District
+South,Bo,Lugbu,Lugbu Community Hospital,Faith Based
+South,Pujehun,Barri,Pujehun Government Hospital,District
+South,Pujehun,Malen,Malen CHC,District
+South,Pujehun,Gallinas Perri,Gallinas Perri CHC,District
+South,Pujehun,Kpaka,Kpaka Government Hospital,District
+South,Bonthe,Jong,Bonthe Government Hospital,District
+South,Bonthe,Bum,Bum CHC,District
+South,Bonthe,Sogbeni,Sogbeni Community Hospital,Faith Based
+South,Bonthe,Upper Banta,Upper Banta CHC,District
+South,Moyamba,Fakunya,Moyamba Government Hospital,District
+South,Moyamba,Kori,Kori CHC,District
+South,Moyamba,Ribbi,Ribbi Government Hospital,District
+South,Moyamba,Dasse,Dasse Community Hospital,District
+South,Moyamba,Kamajei,Kamajei CHC,Faith Based
