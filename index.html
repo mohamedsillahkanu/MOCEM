@@ -1,4 +1,4 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,7 +41,7 @@
 
             <div class="partner-logo-card">
                 <div class="partner-logo-frame">
-                    <img src="logo_mohs.png" alt="Ministry of Health Sierra Leone"
+                    <img src="pic1.png" alt="Ministry of Health Sierra Leone"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                          onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
                          style="display:none;">
@@ -58,7 +58,7 @@
 
             <div class="partner-logo-card">
                 <div class="partner-logo-frame">
-                    <img src="logo_nmcp.png" alt="National Malaria Control Programme"
+                    <img src="pic2.png" alt="National Malaria Control Programme"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                          onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
                          style="display:none;">
@@ -75,7 +75,7 @@
 
             <div class="partner-logo-card">
                 <div class="partner-logo-frame">
-                    <img src="logo_pmi.png" alt="PMI Evolve"
+                    <img src="pic3.png" alt="PMI Evolve"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                          onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
                          style="display:none;">
@@ -288,18 +288,63 @@
                     </div>
                 </div>
 
-                <!-- STAFF DESCRIPTION -->
                 <div class="table-block">
                     <div class="table-block-header">
                         <svg class="block-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
                         HEALTH FACILITY STAFF DESCRIPTION
                     </div>
                     <div class="staff-grid">
-                        <div class="staff-header-row"><span>CADRE</span><span>MALE</span><span>FEMALE</span><span>ON SALARY</span><span>NOT ON SALARY</span></div>
-                        <div class="staff-data-row"><span class="staff-label">Medical (Doctors/CHOs)</span><input type="number" class="form-input mini" name="med_male" min="0" placeholder="0"><input type="number" class="form-input mini" name="med_female" min="0" placeholder="0"><input type="number" class="form-input mini" name="med_salary" min="0" placeholder="0"><input type="number" class="form-input mini" name="med_nosalary" min="0" placeholder="0"></div>
-                        <div class="staff-data-row"><span class="staff-label">Nursing (Midwives/SECHN)</span><input type="number" class="form-input mini" name="nurs_male" min="0" placeholder="0"><input type="number" class="form-input mini" name="nurs_female" min="0" placeholder="0"><input type="number" class="form-input mini" name="nurs_salary" min="0" placeholder="0"><input type="number" class="form-input mini" name="nurs_nosalary" min="0" placeholder="0"></div>
-                        <div class="staff-data-row"><span class="staff-label">Laboratory (Techs/CHTs)</span><input type="number" class="form-input mini" name="lab_male" min="0" placeholder="0"><input type="number" class="form-input mini" name="lab_female" min="0" placeholder="0"><input type="number" class="form-input mini" name="lab_salary" min="0" placeholder="0"><input type="number" class="form-input mini" name="lab_nosalary" min="0" placeholder="0"></div>
-                        <div class="staff-data-row"><span class="staff-label">Data / Records Clerk</span><input type="number" class="form-input mini" name="data_male" min="0" placeholder="0"><input type="number" class="form-input mini" name="data_female" min="0" placeholder="0"><input type="number" class="form-input mini" name="data_salary" min="0" placeholder="0"><input type="number" class="form-input mini" name="data_nosalary" min="0" placeholder="0"></div>
+                        <div class="staff-header-row">
+                            <span>CADRE</span><span>MALE</span><span>FEMALE</span><span>ON SALARY</span><span>NOT ON SALARY</span><span></span>
+                        </div>
+                        <div id="staffRows">
+                            <div class="staff-data-row" data-row="1">
+                                <input type="text" class="form-input" name="staff_cadre_1" placeholder="e.g. Medical Officers" style="font-size:0.76rem;">
+                                <input type="number" class="form-input mini" name="staff_male_1" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_female_1" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_salary_1" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_nosalary_1" min="0" placeholder="0">
+                                <button type="button" class="staff-del-btn" onclick="removeStaffRow(this)" title="Remove row">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                </button>
+                            </div>
+                            <div class="staff-data-row" data-row="2">
+                                <input type="text" class="form-input" name="staff_cadre_2" placeholder="e.g. Nursing/Midwives" style="font-size:0.76rem;">
+                                <input type="number" class="form-input mini" name="staff_male_2" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_female_2" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_salary_2" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_nosalary_2" min="0" placeholder="0">
+                                <button type="button" class="staff-del-btn" onclick="removeStaffRow(this)" title="Remove row">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                </button>
+                            </div>
+                            <div class="staff-data-row" data-row="3">
+                                <input type="text" class="form-input" name="staff_cadre_3" placeholder="e.g. Laboratory Technicians" style="font-size:0.76rem;">
+                                <input type="number" class="form-input mini" name="staff_male_3" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_female_3" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_salary_3" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_nosalary_3" min="0" placeholder="0">
+                                <button type="button" class="staff-del-btn" onclick="removeStaffRow(this)" title="Remove row">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                </button>
+                            </div>
+                            <div class="staff-data-row" data-row="4">
+                                <input type="text" class="form-input" name="staff_cadre_4" placeholder="e.g. Data/Records Clerk" style="font-size:0.76rem;">
+                                <input type="number" class="form-input mini" name="staff_male_4" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_female_4" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_salary_4" min="0" placeholder="0">
+                                <input type="number" class="form-input mini" name="staff_nosalary_4" min="0" placeholder="0">
+                                <button type="button" class="staff-del-btn" onclick="removeStaffRow(this)" title="Remove row">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="staff-add-row">
+                            <button type="button" class="staff-add-btn" onclick="addStaffRow()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                ADD STAFF CADRE
+                            </button>
+                        </div>
                     </div>
                 </div>
 
