@@ -176,6 +176,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
                     <div><h2 class="section-title">FORM A: GENERAL FACILITY INFORMATION</h2><p class="section-description">Health facility identification, staff profile, and supervisor details</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_2" style="display:none;"></div>
 
                 <!-- CASCADE: Region > District > Chiefdom > Hospital -->
                 <div class="cascade-banner">
@@ -259,33 +260,43 @@
                     <div class="field-error" id="error_visit_date">Please select the visit date</div>
                 </div>
 
-                <!-- SUPERVISORS -->
+                <!-- SUPERVISORS — DYNAMIC -->
                 <div class="table-block">
                     <div class="table-block-header">
                         <svg class="block-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
                         SUPERVISORS INFORMATION — At least 1 required
                     </div>
-                    <div style="padding:14px;">
-                        <div class="two-col">
-                            <div class="form-group"><label class="form-label">Supervisor 1 — Full Name <span class="required">*</span></label><input type="text" class="form-input" name="sup1_name" id="sup1_name" required placeholder="Full name"><div class="field-error" id="error_sup1_name">Required</div></div>
-                            <div class="form-group"><label class="form-label">Sex <span class="required">*</span></label><select class="form-select" name="sup1_sex" id="sup1_sex" required><option value="">Select</option><option>Male</option><option>Female</option></select><div class="field-error" id="error_sup1_sex">Required</div></div>
+                    <div id="supervisorRows">
+                        <!-- Supervisor 1 — required -->
+                        <div class="supervisor-card" data-sup="1">
+                            <div class="sup-card-header">
+                                <span class="sup-number">SUPERVISOR 1 <span class="required">*</span></span>
+                                <button type="button" class="sup-del-btn" onclick="removeSupRow(this)" title="Remove supervisor" disabled>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                </button>
+                            </div>
+                            <div class="two-col">
+                                <div class="form-group"><label class="form-label">Full Name <span class="required">*</span></label><input type="text" class="form-input" name="sup_name_1" id="sup_name_1" data-sup-req="true" placeholder="Full name"><div class="field-error" id="error_sup_name_1">Full name is required</div></div>
+                                <div class="form-group"><label class="form-label">Sex <span class="required">*</span></label><select class="form-select" name="sup_sex_1" id="sup_sex_1" data-sup-req="true"><option value="">Select</option><option>Male</option><option>Female</option></select><div class="field-error" id="error_sup_sex_1">Please select sex</div></div>
+                            </div>
+                            <div class="two-col">
+                                <div class="form-group"><label class="form-label">Designation <span class="required">*</span></label><input type="text" class="form-input" name="sup_designation_1" id="sup_designation_1" data-sup-req="true" placeholder="Title / Role"><div class="field-error" id="error_sup_designation_1">Designation is required</div></div>
+                                <div class="form-group"><label class="form-label">Organization <span class="required">*</span></label><input type="text" class="form-input" name="sup_org_1" id="sup_org_1" data-sup-req="true" placeholder="Organization"><div class="field-error" id="error_sup_org_1">Organization is required</div></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contact Number <span class="required">*</span> <span class="phone-hint">(9 digits)</span></label>
+                                <input type="tel" class="form-input" name="sup_contact_1" id="sup_contact_1" data-sup-req="true" data-phone="true" placeholder="e.g. 076123456" maxlength="9" oninput="validatePhone(this)">
+                                <div class="field-error" id="error_sup_contact_1">Enter exactly 9 digits</div>
+                            </div>
                         </div>
-                        <div class="two-col">
-                            <div class="form-group"><label class="form-label">Designation <span class="required">*</span></label><input type="text" class="form-input" name="sup1_designation" id="sup1_designation" required placeholder="Title/Role"><div class="field-error" id="error_sup1_designation">Required</div></div>
-                            <div class="form-group"><label class="form-label">Organization <span class="required">*</span></label><input type="text" class="form-input" name="sup1_org" id="sup1_org" required placeholder="Organization"><div class="field-error" id="error_sup1_org">Required</div></div>
-                        </div>
-                        <div class="form-group"><label class="form-label">Contact <span class="required">*</span></label><input type="tel" class="form-input" name="sup1_contact" id="sup1_contact" required placeholder="Phone number"><div class="field-error" id="error_sup1_contact">Required</div></div>
-                        <div style="border-top:1px dashed var(--light-gray); margin:14px 0 10px;"></div>
-                        <div class="two-col">
-                            <div class="form-group"><label class="form-label">Supervisor 2 — Full Name</label><input type="text" class="form-input" name="sup2_name" id="sup2_name" placeholder="Optional"></div>
-                            <div class="form-group"><label class="form-label">Sex</label><select class="form-select" name="sup2_sex" id="sup2_sex"><option value="">Select</option><option>Male</option><option>Female</option></select></div>
-                        </div>
-                        <div class="two-col">
-                            <div class="form-group"><label class="form-label">Designation</label><input type="text" class="form-input" name="sup2_designation" id="sup2_designation" placeholder="Title/Role"></div>
-                            <div class="form-group"><label class="form-label">Organization</label><input type="text" class="form-input" name="sup2_org" id="sup2_org" placeholder="Organization"></div>
-                        </div>
-                        <div class="form-group"><label class="form-label">Contact</label><input type="tel" class="form-input" name="sup2_contact" id="sup2_contact" placeholder="Phone number"></div>
                     </div>
+                    <div class="sup-add-row">
+                        <button type="button" class="staff-add-btn" onclick="addSupRow()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            ADD SUPERVISOR
+                        </button>
+                    </div>
+                    <div class="field-error" id="error_supervisors" style="margin:0 14px 12px;">At least one supervisor is required with all fields completed</div>
                 </div>
 
                 <div class="table-block">
@@ -363,6 +374,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
                     <div><h2 class="section-title">FORM B1: FACILITY CAPACITY &amp; STAFF TRAINING</h2><p class="section-description">Infrastructure, staff competency, basic tools, waste management, and reference materials</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_3" style="display:none;"></div>
 
                 <div class="checklist-block">
                     <div class="checklist-block-header">1. HEALTH FACILITY CAPACITY</div>
@@ -495,6 +507,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
                     <div><h2 class="section-title">FORM B2: REPORTING TOOLS READINESS</h2><p class="section-description">Availability, sufficiency, and stock-out status of all reporting tools</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_4" style="display:none;"></div>
                 <p class="section-instruction"><span class="required">*</span> All responses required for each tool</p>
 
                 <div class="reporting-tools-grid">
@@ -524,6 +537,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
                     <div><h2 class="section-title">FORM B3: SUPPLY CHAIN — ANTIMALARIAL DRUGS</h2><p class="section-description">Availability, sufficiency, and stock-out status of antimalarial drugs</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_5" style="display:none;"></div>
                 <p class="section-instruction"><span class="required">*</span> All responses required for each drug</p>
 
                 <div class="reporting-tools-grid">
@@ -556,6 +570,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
                     <div><h2 class="section-title">FORM B4: ESSENTIAL DRUGS &amp; STORAGE</h2><p class="section-description">Availability, sufficiency, stock-out and storage conditions</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_6" style="display:none;"></div>
                 <p class="section-instruction"><span class="required">*</span> All responses required for each drug</p>
 
                 <div class="reporting-tools-grid">
@@ -616,6 +631,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div>
                     <div><h2 class="section-title">FORM B5: mRDT COMPLIANCE &amp; LAB DIAGNOSTIC QUALITY</h2><p class="section-description">Compliance with mRDT negative results and laboratory quality assessment</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_7" style="display:none;"></div>
 
                 <div class="checklist-block">
                     <div class="checklist-block-header">11. COMPLIANCE WITH mRDT NEGATIVE RESULTS</div>
@@ -667,6 +683,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg></div>
                     <div><h2 class="section-title">FORM B6: EMERGENCY BLOOD &amp; OXYGEN READINESS</h2><p class="section-description">Blood transfusion services and oxygen therapy apparatus</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_8" style="display:none;"></div>
 
                 <div class="checklist-block">
                     <div class="checklist-block-header">13.1 BLOOD TRANSFUSION SERVICES</div>
@@ -706,6 +723,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
                     <div><h2 class="section-title">FORM B7: CORRECTIVE ACTIONS &amp; SUPERVISOR FEEDBACK</h2><p class="section-description">Identified gaps, immediate corrective actions, and supervisor rating</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_9" style="display:none;"></div>
 
                 <div class="checklist-block">
                     <div class="checklist-block-header">14. IMMEDIATE CORRECTIVE ACTIONS</div>
@@ -763,6 +781,7 @@
                     <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
                     <div><h2 class="section-title">SECTION 10: ACTION PLAN, FOLLOW-UP &amp; SUBMISSION</h2><p class="section-description">Gap action plan, previous visit review, and final submission</p></div>
                 </div>
+                <div class="val-summary" id="valSummary_10" style="display:none;"></div>
 
                 <div class="checklist-block">
                     <div class="checklist-block-header">16. ACTION PLAN FOR ADDRESSING IDENTIFIED GAPS</div>
