@@ -334,163 +334,282 @@ function checkWasteOther() {
 }
 
 // ============================================================
-// SECTION VALIDATION
+// SECTION VALIDATION — complete rewrite
 // ============================================================
+
+/**
+ * Get a human-readable label for an input element
+ */
+function getFieldLabel(el) {
+    // Try closest form-group label
+    const fg = el.closest('.form-group, .checklist-row, .rt-row, .ica-row, .mrdt-row, .training-row');
+    if (fg) {
+        const lbl = fg.querySelector('.form-label, .checklist-q, .rt-label, .ica-gap, .training-label');
+        if (lbl) {
+            return lbl.textContent.replace('*','').replace(/\s+/g,' ').trim().substring(0, 70);
+        }
+    }
+    // Fallback to placeholder or name
+    return el.placeholder || el.name || el.id || 'Required field';
+}
+
 function validateSection(sectionNum) {
-    // Section 1 is intro only — no fields to validate, always pass
+    // Section 1 is intro — no fields, always passes
     if (sectionNum === 1) return true;
 
     const section = document.querySelector(`.form-section[data-section="${sectionNum}"]`);
     if (!section) return true;
 
-    let valid = true;
-    let firstError = null;
+    let valid    = true;
+    let firstErr = null;
+    const errorList = [];  // {label, el}
 
-    function fail(el) {
+    function fail(el, label) {
         valid = false;
-        if (!firstError) firstError = el;
+        if (!firstErr) firstErr = el;
+        if (label) errorList.push(label);
     }
 
-    // --- Text / number / date / select inputs with [required] ---
-    section.querySelectorAll('input[required], select[required]').forEach(el => {
-        const skip = el.closest('.skipped');
-        if (skip) return;
-        if (!el.value || el.value.trim() === '') {
+    // ---------------------------------------------------------
+    // 1. Standard required text / number / date / select
+    //    (NOT [required] on HCW numbers — those handled below with split logic)
+    // ---------------------------------------------------------
+    section.querySelectorAll('input[required]:not([type="hidden"]), select[required]').forEach(el => {
+        if (el.closest('.skipped')) return;
+        const empty = !el.value || el.value.trim() === '';
+        if (empty) {
             el.classList.add('invalid');
-            showErr('error_' + el.id);
-            fail(el);
-        } else {
-            el.classList.remove('invalid');
-            hideErr('error_' + el.id);
-        }
-    });
-
-    // --- Inputs with data-required="true" (non-standard required) ---
-    section.querySelectorAll('input[data-required="true"], select[data-required="true"]').forEach(el => {
-        const skip = el.closest('.skipped');
-        if (skip) return;
-        if (el.type === 'hidden') return; // handled below
-        if (!el.value || el.value.trim() === '') {
-            el.classList.add('invalid');
-            showErr('error_' + el.id);
-            fail(el);
-        } else {
-            el.classList.remove('invalid');
-            hideErr('error_' + el.id);
-        }
-    });
-
-    // --- Number inputs with data-req="number" (must be filled) ---
-    section.querySelectorAll('[data-req="number"]').forEach(el => {
-        const skip = el.closest('.skipped');
-        if (skip) return;
-        if (el.value === '' || el.value === null) {
-            el.classList.add('invalid');
-            fail(el);
-        } else {
-            el.classList.remove('invalid');
-        }
-    });
-
-    // --- YN hidden inputs with data-required="true" ---
-    section.querySelectorAll('input[type="hidden"][data-required="true"]').forEach(hidden => {
-        const skip = hidden.closest('.skipped');
-        if (skip) return;
-        const group = hidden.closest('.yn-btn-group');
-        const name  = hidden.name;
-        if (!hidden.value) {
-            if (group) group.classList.add('yn-error');
-            showYNErr('error_' + name);
-            fail(group || hidden);
-        } else {
-            if (group) group.classList.remove('yn-error');
-            hideYNErr('error_' + name);
-        }
-    });
-
-    // --- Required radio groups ---
-    section.querySelectorAll('[id^="grp_"]').forEach(grp => {
-        const skip = grp.closest('.skipped');
-        if (skip) return;
-        const id = grp.id; // grp_q4a, grp_q15b, grp_q20
-        const name = id.replace('grp_', '');
-        const checked = grp.querySelector(`input[type="radio"][name="${name}"]:checked`) ||
-                        grp.querySelector(`input[type="radio"]:checked`);
-        // Determine if required by checking if field-error sibling exists
-        const errId = 'error_' + name + '_rating'; // for q15b_rating
-        const errIdAlt = 'error_' + name;
-        const errEl = document.getElementById(errId) || document.getElementById(errIdAlt);
-        if (!errEl) return; // not required
-        if (!checked) {
-            grp.classList.add('invalid');
+            const errEl = document.getElementById('error_' + el.id);
             if (errEl) errEl.classList.add('show');
-            fail(grp);
+            fail(el, getFieldLabel(el));
         } else {
-            grp.classList.remove('invalid');
+            el.classList.remove('invalid');
+            const errEl = document.getElementById('error_' + el.id);
             if (errEl) errEl.classList.remove('show');
         }
     });
 
-    // --- Required checkbox groups (at least 1 checked) ---
+    // ---------------------------------------------------------
+    // 2. Supervisor required fields  (data-sup-req="true")
+    // ---------------------------------------------------------
+    section.querySelectorAll('[data-sup-req="true"]').forEach(el => {
+        if (el.closest('.skipped')) return;
+        const empty = !el.value || el.value.trim() === '';
+        const phoneErr = el.dataset.phone === 'true' && el.value && !/^\d{9}$/.test(el.value.replace(/\s/g,''));
+        if (empty || phoneErr) {
+            el.classList.add('invalid');
+            const errEl = document.getElementById('error_' + el.id);
+            if (errEl) errEl.classList.add('show');
+            fail(el, getFieldLabel(el));
+        } else {
+            el.classList.remove('invalid');
+            const errEl = document.getElementById('error_' + el.id);
+            if (errEl) errEl.classList.remove('show');
+        }
+    });
+
+    // ---------------------------------------------------------
+    // 3. Number fields (data-req="number") — auto-fill "0" if blank; never block
+    // ---------------------------------------------------------
+    section.querySelectorAll('[data-req="number"]').forEach(el => {
+        if (el.closest('.skipped')) return;
+        if (el.value === '' || el.value === null || el.value === undefined) {
+            el.value = '0';  // auto-fill default
+        }
+        el.classList.remove('invalid');
+    });
+
+    // ---------------------------------------------------------
+    // 4. HCW split validation (section 2 only)
+    // ---------------------------------------------------------
+    if (sectionNum === 2) {
+        const total  = parseInt(document.getElementById('total_hcw')?.value)  || 0;
+        const male   = parseInt(document.getElementById('male_hcw')?.value)   || 0;
+        const female = parseInt(document.getElementById('female_hcw')?.value) || 0;
+        const splitErr = document.getElementById('error_hcw_split');
+        if (total > 0 && (male + female) !== total) {
+            if (splitErr) splitErr.classList.add('show');
+            fail(document.getElementById('total_hcw'), `HCW count: Male (${male}) + Female (${female}) must equal Total (${total})`);
+        } else {
+            if (splitErr) splitErr.classList.remove('show');
+        }
+    }
+
+    // ---------------------------------------------------------
+    // 5. YN hidden inputs with data-required="true"
+    //    Special handling for training grid and ICA grid
+    // ---------------------------------------------------------
+    let trainingFailed = false;
+    let icaFailed      = false;
+
+    section.querySelectorAll('input[type="hidden"][data-required="true"]').forEach(hidden => {
+        if (hidden.closest('.skipped')) return;
+        const group = hidden.closest('.yn-btn-group');
+        const name  = hidden.name;
+
+        if (!hidden.value) {
+            if (group) group.classList.add('yn-error');
+            // Try to find specific error div
+            const errEl = document.getElementById('error_' + name);
+            if (errEl) errEl.classList.add('show');
+            // Detect training / ICA rows — use group error instead of per-field
+            const inTraining = hidden.closest('.training-row');
+            const inIca      = hidden.closest('.ica-row');
+            if (inTraining) {
+                trainingFailed = true;
+            } else if (inIca) {
+                icaFailed = true;
+            } else {
+                // Get label from checklist-q sibling
+                const row = hidden.closest('.checklist-row, .rt-row, .mrdt-row');
+                let label = '';
+                if (row) {
+                    const sn = row.querySelector('.checklist-sn')?.textContent?.trim() || '';
+                    const qEl = row.querySelector('.checklist-q');
+                    if (qEl) {
+                        label = (sn ? sn + '. ' : '') + qEl.textContent.replace('*','').replace(/\s+/g,' ').trim().substring(0,70);
+                    } else {
+                        const rtLabel = row.querySelector('.rt-label');
+                        if (rtLabel) label = rtLabel.textContent.trim().substring(0,70);
+                    }
+                }
+                fail(group || hidden, label);
+            }
+        } else {
+            if (group) group.classList.remove('yn-error');
+            const errEl = document.getElementById('error_' + name);
+            if (errEl) errEl.classList.remove('show');
+        }
+    });
+
+    if (trainingFailed) {
+        const te = document.getElementById('error_training');
+        if (te) te.classList.add('show');
+        const firstUnanswered = section.querySelector('.training-row .yn-btn-group.yn-error');
+        fail(firstUnanswered, 'Training competency — answer all cadre rows');
+    } else {
+        const te = document.getElementById('error_training');
+        if (te) te.classList.remove('show');
+    }
+
+    if (icaFailed) {
+        const ie = document.getElementById('error_ica_all');
+        if (ie) ie.classList.add('show');
+        const firstUnanswered = section.querySelector('.ica-row .yn-btn-group.yn-error');
+        fail(firstUnanswered, 'Corrective actions — answer all gap rows');
+    } else {
+        const ie = document.getElementById('error_ica_all');
+        if (ie) ie.classList.remove('show');
+    }
+
+    // ---------------------------------------------------------
+    // 6. Radio groups — use actual radio name inside the group
+    // ---------------------------------------------------------
+    section.querySelectorAll('[id^="grp_"]').forEach(grp => {
+        if (grp.closest('.skipped')) return;
+        const anyRadio  = grp.querySelector('input[type="radio"]');
+        if (!anyRadio) return;
+        const radioName = anyRadio.name;   // get actual name from first radio
+        const checked   = grp.querySelector(`input[type="radio"][name="${radioName}"]:checked`);
+
+        // Only enforce if a field-error div is present inside or nearby
+        const nearbyErr = grp.parentElement?.querySelector('.field-error') ||
+                          grp.closest('.checklist-row, .form-group')?.querySelector('.field-error');
+        if (!nearbyErr) return;
+
+        if (!checked) {
+            grp.classList.add('invalid');
+            nearbyErr.classList.add('show');
+            const label = grp.closest('.checklist-row, .form-group')
+                ?.querySelector('.checklist-q, .form-label')
+                ?.textContent.replace('*','').replace(/\s+/g,' ').trim().substring(0,70) || radioName;
+            fail(grp, label);
+        } else {
+            grp.classList.remove('invalid');
+            nearbyErr.classList.remove('show');
+        }
+    });
+
+    // ---------------------------------------------------------
+    // 7. Required checkbox groups (at least 1 must be checked)
+    // ---------------------------------------------------------
     [
-        ['grp_q3g', 'error_q3g'],
-        ['grp_q3h', 'error_q3h'],
-        ['grp_q3i', 'error_q3i'],
-        ['grp_q101n','error_q101n']
-    ].forEach(([grpId, errId]) => {
+        ['grp_q3g', 'error_q3g', 'Laboratory instruments and reagents'],
+        ['grp_q3h', 'error_q3h', 'Other equipment at facility'],
+        ['grp_q3i', 'error_q3i', 'Emergency equipment'],
+        ['grp_q101n','error_q101n','Storage conditions'],
+    ].forEach(([grpId, errId, label]) => {
         const grp = document.getElementById(grpId);
         const err = document.getElementById(errId);
         if (!grp || !err) return;
-        const skip = grp.closest('.skipped');
-        if (skip) return;
+        if (grp.closest('.skipped')) return;
         const checked = grp.querySelector('input[type="checkbox"]:checked');
         if (!checked) {
             grp.classList.add('invalid');
             err.classList.add('show');
-            fail(grp);
+            fail(grp, label + ' (select at least one)');
         } else {
             grp.classList.remove('invalid');
             err.classList.remove('show');
         }
     });
 
-    // --- HCW split validation (section 2) ---
-    if (sectionNum === 2) {
-        const total  = parseInt(document.getElementById('total_hcw')?.value) || 0;
-        const male   = parseInt(document.getElementById('male_hcw')?.value)  || 0;
-        const female = parseInt(document.getElementById('female_hcw')?.value)|| 0;
-        const splitErr = document.getElementById('error_hcw_split');
-        if (total > 0 && (male + female) !== total) {
-            if (splitErr) splitErr.classList.add('show');
-            fail(document.getElementById('total_hcw'));
+    // ---------------------------------------------------------
+    // Show / hide validation summary banner
+    // ---------------------------------------------------------
+    const summary = document.getElementById('valSummary_' + sectionNum);
+    if (summary) {
+        if (!valid && errorList.length) {
+            const items = errorList.map(l => `<li>${l}</li>`).join('');
+            summary.innerHTML = `
+                <div class="val-summary-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    ${errorList.length} field${errorList.length > 1 ? 's' : ''} need${errorList.length === 1 ? 's' : ''} attention before you can continue:
+                </div>
+                <ul class="val-summary-list">${items}</ul>`;
+            summary.style.display = 'block';
         } else {
-            if (splitErr) splitErr.classList.remove('show');
+            summary.style.display = 'none';
         }
     }
 
-    if (!valid && firstError) {
-        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        showNotification('Please complete all required fields before continuing', 'error');
+    if (!valid && firstErr) {
+        // Scroll to the summary banner if visible, else first error
+        const target = (summary && summary.style.display !== 'none') ? summary : firstErr;
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
     }
 
     return valid;
 }
 
 function validateHCW() {
-    const total  = parseInt(document.getElementById('total_hcw')?.value) || 0;
-    const male   = parseInt(document.getElementById('male_hcw')?.value)  || 0;
-    const female = parseInt(document.getElementById('female_hcw')?.value)|| 0;
-    const err = document.getElementById('error_hcw_split');
-    if (total > 0 && (male + female) !== total) {
+    const total  = parseInt(document.getElementById('total_hcw')?.value)  || 0;
+    const male   = parseInt(document.getElementById('male_hcw')?.value)   || 0;
+    const female = parseInt(document.getElementById('female_hcw')?.value) || 0;
+    const err    = document.getElementById('error_hcw_split');
+    if (total > 0 && male + female !== total) {
         if (err) err.classList.add('show');
     } else {
         if (err) err.classList.remove('show');
     }
 }
 
+function validatePhone(el) {
+    const digits = el.value.replace(/\D/g,'');
+    el.value = digits.substring(0, 9);  // strip non-digits, cap at 9
+    const errEl = document.getElementById('error_' + el.id);
+    if (el.value.length > 0 && el.value.length !== 9) {
+        el.classList.add('invalid');
+        if (errEl) { errEl.textContent = `Enter exactly 9 digits (${el.value.length} entered)`; errEl.classList.add('show'); }
+    } else {
+        el.classList.remove('invalid');
+        if (errEl) errEl.classList.remove('show');
+    }
+}
+
 function showErr(id)    { const el = document.getElementById(id); if (el) el.classList.add('show'); }
 function hideErr(id)    { const el = document.getElementById(id); if (el) el.classList.remove('show'); }
-function showYNErr(id)  { const el = document.getElementById(id); if (el) { el.classList.add('show'); } }
+function showYNErr(id)  { const el = document.getElementById(id); if (el) el.classList.add('show'); }
 function hideYNErr(id)  { const el = document.getElementById(id); if (el) el.classList.remove('show'); }
 function clearFieldError(id) {
     const el = document.getElementById(id);
@@ -929,5 +1048,82 @@ function updateDelBtnStates() {
     rows.forEach(r => {
         const btn = r.querySelector('.staff-del-btn');
         if (btn) btn.disabled = rows.length <= 1;
+    });
+}
+
+// ============================================================
+// DYNAMIC SUPERVISOR ROWS
+// ============================================================
+let supRowCount = 1;
+
+function addSupRow() {
+    supRowCount++;
+    const n = supRowCount;
+    const container = document.getElementById('supervisorRows');
+    if (!container) return;
+
+    const card = document.createElement('div');
+    card.className = 'supervisor-card';
+    card.dataset.sup = n;
+    card.innerHTML = `
+        <div class="sup-card-header">
+            <span class="sup-number">SUPERVISOR ${n}</span>
+            <button type="button" class="sup-del-btn" onclick="removeSupRow(this)" title="Remove supervisor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="two-col">
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" name="sup_name_${n}" id="sup_name_${n}" placeholder="Full name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Sex</label>
+                <select class="form-select" name="sup_sex_${n}" id="sup_sex_${n}">
+                    <option value="">Select</option><option>Male</option><option>Female</option>
+                </select>
+            </div>
+        </div>
+        <div class="two-col">
+            <div class="form-group">
+                <label class="form-label">Designation</label>
+                <input type="text" class="form-input" name="sup_designation_${n}" placeholder="Title / Role">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Organization</label>
+                <input type="text" class="form-input" name="sup_org_${n}" placeholder="Organization">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Contact Number <span class="phone-hint">(9 digits)</span></label>
+            <input type="tel" class="form-input" name="sup_contact_${n}" id="sup_contact_${n}"
+                   data-phone="true" placeholder="e.g. 076123456" maxlength="9"
+                   oninput="validatePhone(this)">
+            <div class="field-error" id="error_sup_contact_${n}">Enter exactly 9 digits</div>
+        </div>`;
+    container.appendChild(card);
+    card.querySelector('input[type="text"]').focus();
+    updateSupDelBtns();
+}
+
+function removeSupRow(btn) {
+    const card = btn.closest('.supervisor-card');
+    const container = document.getElementById('supervisorRows');
+    if (!container || container.children.length <= 1) return;
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(10px)';
+    card.style.transition = 'opacity 0.15s, transform 0.15s';
+    setTimeout(() => { card.remove(); updateSupDelBtns(); }, 150);
+}
+
+function updateSupDelBtns() {
+    const container = document.getElementById('supervisorRows');
+    if (!container) return;
+    const cards = container.querySelectorAll('.supervisor-card');
+    cards.forEach(c => {
+        const btn = c.querySelector('.sup-del-btn');
+        if (btn) btn.disabled = cards.length <= 1;
     });
 }
