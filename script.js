@@ -337,6 +337,9 @@ function checkWasteOther() {
 // SECTION VALIDATION
 // ============================================================
 function validateSection(sectionNum) {
+    // Section 1 is intro only — no fields to validate, always pass
+    if (sectionNum === 1) return true;
+
     const section = document.querySelector(`.form-section[data-section="${sectionNum}"]`);
     if (!section) return true;
 
@@ -877,4 +880,54 @@ function esc(str) {
     return String(str)
         .replace(/&/g,'&amp;').replace(/</g,'&lt;')
         .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ============================================================
+// DYNAMIC STAFF ROWS
+// ============================================================
+let staffRowCount = 4; // 4 default rows already in HTML
+
+function addStaffRow() {
+    staffRowCount++;
+    const n = staffRowCount;
+    const container = document.getElementById('staffRows');
+    if (!container) return;
+    const row = document.createElement('div');
+    row.className = 'staff-data-row';
+    row.dataset.row = n;
+    row.innerHTML = `
+        <input type="text"   class="form-input"      name="staff_cadre_${n}"    placeholder="e.g. Pharmacist" style="font-size:0.76rem;">
+        <input type="number" class="form-input mini"  name="staff_male_${n}"     min="0" placeholder="0">
+        <input type="number" class="form-input mini"  name="staff_female_${n}"   min="0" placeholder="0">
+        <input type="number" class="form-input mini"  name="staff_salary_${n}"   min="0" placeholder="0">
+        <input type="number" class="form-input mini"  name="staff_nosalary_${n}" min="0" placeholder="0">
+        <button type="button" class="staff-del-btn" onclick="removeStaffRow(this)" title="Remove row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+                <line x1="18" y1="6"  x2="6"  y2="18"/>
+                <line x1="6"  y1="6"  x2="18" y2="18"/>
+            </svg>
+        </button>`;
+    container.appendChild(row);
+    row.querySelector('input[type="text"]').focus();
+    updateDelBtnStates();
+}
+
+function removeStaffRow(btn) {
+    const row = btn.closest('.staff-data-row');
+    const container = document.getElementById('staffRows');
+    if (!container || container.children.length <= 1) return; // keep at least 1
+    row.style.opacity = '0';
+    row.style.transform = 'translateX(10px)';
+    row.style.transition = 'opacity 0.15s, transform 0.15s';
+    setTimeout(() => { row.remove(); updateDelBtnStates(); }, 150);
+}
+
+function updateDelBtnStates() {
+    const container = document.getElementById('staffRows');
+    if (!container) return;
+    const rows = container.querySelectorAll('.staff-data-row');
+    rows.forEach(r => {
+        const btn = r.querySelector('.staff-del-btn');
+        if (btn) btn.disabled = rows.length <= 1;
+    });
 }
